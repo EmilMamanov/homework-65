@@ -1,15 +1,24 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import NavigationComponent from './components/NavigationComponent/NavigationComponent';
+import PageComponent from './components/PageComponent/PageComponent';
+import EditorComponent from './components/EditorComponent/EditorComponent';
+import './App.css';
 
 const App: React.FC = () => {
+    const [selectedPage, setSelectedPage] = useState<string>(''); // Установка начального значения
+
     return (
         <Router>
             <div>
-                <Navigation/>
-                <Switch>
-                    <Route path="/pages/admin" component={EditorComponent} />
-                    <Route path="/pages/:pageName" component={PageComponent} />
-                </Switch>
+                <NavigationComponent />
+                <Routes>
+                    <Route
+                        path="/pages/admin"
+                        element={<EditorComponent selectedPage={selectedPage} setSelectedPage={setSelectedPage} />}
+                    />
+                    <Route path="/pages/:pageName" element={<PageComponent />} />
+                </Routes>
             </div>
         </Router>
     );
